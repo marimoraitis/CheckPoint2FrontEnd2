@@ -11,31 +11,42 @@ let formData = {
 };
 createUserButtonElement.addEventListener('click', (event) => {
   event.preventDefault();
-  if (formData.passwordConfirm) {
+  if (Object.values(formData).every(Boolean)) {
     createUser();
   } else {
     alert('deu ruim');
   }
 });
 // 12345678
-for (let input of allInputsElements) {
-  input.addEventListener('keyup', (event) => {
-    if (input.checkValidity()) {
-      input.classList.remove('invalid');
-      formData[input.id] = input.value;
+let checkInputValidity = (input) => {
+  if (input.checkValidity()) {
+    input.classList.remove('invalid');
+    formData[input.id] = input.value.trim();
+  } else {
+    input.classList.add('invalid');
+    formData[input.id] = '';
+  }
+  if (input.id == 'passwordConfirm') {
+    if (input.value === formData.password && input.checkValidity()) {
+      formData[input.id] = true;
     } else {
       input.classList.add('invalid');
-      formData[input.id] = '';
+      formData[input.id] = false;
     }
-    if (input.id == 'passwordConfirm') {
-      if (input.value === formData.password && input.checkValidity()) {
-        formData[input.id] = true;
-      } else {
-        input.classList.add('invalid');
-        formData[input.id] = false;
-      }
-    }
+  } else if (input.id == 'email') {
+    input.value = input.value.toLowerCase();
+    formData[input.id] = input.value.toLowerCase();
+  }
+};
 
+for (let input of allInputsElements) {
+  input.addEventListener('keyup', () => {
+    checkInputValidity(input);
+    console.log(formData);
+  });
+  input.addEventListener('change', () => {
+    input.value = input.value.trim();
+    checkInputValidity(input);
     console.log(formData);
   });
 }
@@ -52,7 +63,6 @@ var requestPostConfiguration = {
 };
 function createUser() {
   requestPostConfiguration.body = JSON.stringify(formData);
-
   // O Fetch é responsável por fazer uma requisição para um back-end
   // O parametro do fetch serve justamente para especificarmos aonde ele irá fazer a requisição
   fetch(
@@ -71,5 +81,5 @@ function createUser() {
       }
     });
   });
-  // window.location.href = './../index.html';
+  window.location.href = './../index.html';
 }

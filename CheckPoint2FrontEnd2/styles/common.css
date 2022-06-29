@@ -25,8 +25,12 @@ button {
 small {
   display: none;
 }
-.invalid {
-  background-color: red;
+input.invalid {
+  background-color: tomato;
+  border-color: tomato !important;
+}
+input.invalid:focus {
+  border-color: crimson !important;
 }
 .invalid + small {
   position: relative;
@@ -35,5 +39,5 @@ small {
   height: 0;
   top: -0.2em;
   font-size: 0.7em;
-  color: red;
+  color: tomato;
 }
