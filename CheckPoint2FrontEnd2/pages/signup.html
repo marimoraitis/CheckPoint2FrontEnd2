@@ -8,11 +8,7 @@
   <title>To-Do App</title>
 
   <!-- ---------------- estilos compartilhados entre login e signup ---------------- -->
-  <link rel="stylesheet" href="styles/acesso.css">
-
-  <!-- ---------------------- lógica aplicada no registro -------------------- -->
-  <script src="/scripts/utils.js"></script>
-  <script src="/scripts/signup.js"></script>
+  <link rel="stylesheet" href="./../styles/acesso.css">
 
 </head>
 
@@ -29,33 +25,38 @@
 
       <label>
         Nome:
-        <input type="text">
       </label>
+      <input id="firstName" type="text" minlength="2" required>
+      <small>nome invalido</small>
       <label>
         Sobrenome:
-        <input type="text">
       </label>
+      <input id="lastName" type="text" minlength="2" required>
+      <small>sobrenome invalido</small>
       <label>
         Email:
-        <input type="email">
       </label>
+      <input id="email" type="email" required>
+      <small>email invalido</small>
       <label>
         Senha:
-        <input type="password">
       </label>
+      <input id="password" type="password" minlength="8" required>
+      <small>senha invalido</small>
       <label>
-        Repetir senha:
-        <input type="password">
+        Confirmar Senha:
       </label>
+      <input id="passwordConfirm" type="password" minlength="8" required>
+      <small>senha invalido</small>
 
-      <button>Criar conta</button>
+      <button type="submit">Criar conta</button>
 
     </form>
     <div class="ingressar">
-      <a href="index.html">Já possui conta? Acesse aqui</a>
+      <a href="./../index.html">Já possui conta? Acesse aqui</a>
     </div>
   </div>
-
+  <script src="./../src/script.js"></script>
 </body>
 
 </html>
