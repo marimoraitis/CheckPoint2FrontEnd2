@@ -9,6 +9,7 @@ let formData = {
   password: '',
   passwordConfirm: false,
 };
+
 createUserButtonElement.addEventListener('click', (event) => {
   event.preventDefault();
   if (Object.values(formData).every(Boolean)) {
@@ -17,47 +18,53 @@ createUserButtonElement.addEventListener('click', (event) => {
     alert('deu ruim');
   }
 });
-// 12345678
+
 let checkInputValidity = (input) => {
   if (input.checkValidity()) {
     input.classList.remove('invalid');
-    formData[input.id] = input.value.trim();
+    handleFormData(input);
   } else {
     input.classList.add('invalid');
     formData[input.id] = '';
+    input.value = input.value.trim();
   }
-  if (input.id == 'passwordConfirm') {
+};
+let handleFormData = (input) => {
+  formData[input.id] = input.value.trim();
+  if (input.id == 'email') {
+    input.value = input.value.toLowerCase();
+    formData[input.id] = input.value.toLowerCase();
+  } else if (input.id == 'password') {
+    input.value = input.value.trim();
+  } else if (input.id == 'passwordConfirm') {
     if (input.value === formData.password && input.checkValidity()) {
       formData[input.id] = true;
+      input.value = input.value.trim();
     } else {
       input.classList.add('invalid');
       formData[input.id] = false;
     }
-  } else if (input.id == 'email') {
-    input.value = input.value.toLowerCase();
-    formData[input.id] = input.value.toLowerCase();
   }
 };
-
 for (let input of allInputsElements) {
   input.addEventListener('keyup', () => {
     checkInputValidity(input);
     console.log(formData);
   });
-  input.addEventListener('change', () => {
+  input.addEventListener('blur', () => {
     input.value = input.value.trim();
     checkInputValidity(input);
     console.log(formData);
   });
 }
 
-var requestHeaders = {
+let requestHeaders = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
 };
 
 // Variavel que irá conter o nosso objeto de configuração da requisição
-var requestPostConfiguration = {
+let requestPostConfiguration = {
   method: 'POST',
   headers: requestHeaders,
 };

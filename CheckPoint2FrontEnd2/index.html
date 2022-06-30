@@ -23,27 +23,26 @@
         <p>To-Do App</p>
       </div>
       <h1>Acessar</h1>
-      <div class="control">
-        <label>
-          Email:
-        </label>
-        <input id="inputEmail" type="email" required>
-      </div>
-      <div class="control">
-        <label>
-          Senha:
-        </label>
-        <input id="inputPassword" type="password" minlength="8" required>
-      </div>
+      <label>
+        Email:
+      </label>
+      <input id="email" type="email" required>
+      <small>email invalido</small>
+      <label>
+        Senha:
+      </label>
+      <input id="password" type="password" minlength="8" required>
+      <small>senha invalido</small>
 
-      <button type="submit">Acessar</button>
+
+      <button type="submit" id="loginButtonElement">Acessar</button>
 
     </form>
     <div class="ingressar">
       <a href="./pages/signup.html">Não possui conta? Crie agora mesmo</a>
     </div>
   </div>
-  <script src="./src/script.js"></script>
+  <script src="./src/login.js"></script>
 </body>
 
 </html>
