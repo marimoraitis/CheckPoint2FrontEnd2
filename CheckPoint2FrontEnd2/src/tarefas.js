@@ -5,6 +5,8 @@ const skeletonElement = document.querySelector('#skeleton');
 const listTasks = document.querySelector('.tarefas-pendentes');
 const completedListTasks = document.querySelector('.tarefas-terminadas');
 const completeTaskButtonElement = document.querySelector('.not-done');
+const closeAppButtonElement = document.querySelector('#closeApp');
+const userName = document.querySelector('#userName');
 const headersAuthRequest = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
@@ -17,8 +19,7 @@ function getUserInfo() {
   }).then((response) => {
     if (response.ok) {
       response.json().then((user) => {
-        console.log(user);
-        console.log(`${user.firstName} ${user.lastName}`);
+        userName.innerHTML = `${user.firstName} ${user.lastName}`;
 
         // !Insira a lógica aqui para mostrar o Nome Completo do usuário no HTML da Aplicação
       });
@@ -63,10 +64,14 @@ function getTasks() {
       // Remoção dos itens que estavam antes dentro da Lista inicial
       listTasks.innerHTML = '';
       completedListTasks.innerHTML = '';
-
       console.log(tasks);
       for (let task of tasks) {
-        console.log(task);
+        let date = new Date(task.createdAt);
+        let dateFormat = date.toLocaleDateString('pt-BR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        });
         if (!task.completed) {
           listTasks.innerHTML += `
         
@@ -74,7 +79,7 @@ function getTasks() {
         <div class="not-done" onclick="updateTask(${task.id},${task.completed})" ></div>
             <div class="descricao">
             <p class="nome">${task.description}</p>
-            <p class="timestamp">Criada em: ${task.createdAt}</p>
+            <p class="timestamp">Criada em: ${dateFormat}</p>
             </div>
         </li>
         
@@ -125,9 +130,19 @@ function createTask() {
   });
 }
 
+function logOut() {
+  localStorage.clear();
+  window.location.href = './../index.html';
+}
+
 completeTaskButtonElement.addEventListener('click', (event) => {
   event.preventDefault();
   completeTask();
+});
+
+closeAppButtonElement.addEventListener('click', (event) => {
+  event.preventDefault();
+  logOut();
 });
 
 createTaskButtonElement.addEventListener('click', (event) => {
