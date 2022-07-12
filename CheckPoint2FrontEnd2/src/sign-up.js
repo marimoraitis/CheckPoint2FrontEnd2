@@ -15,7 +15,11 @@ createUserButtonElement.addEventListener('click', (event) => {
   if (Object.values(formData).every(Boolean)) {
     createUser();
   } else {
-    alert('deu ruim');
+    Swal.fire({
+      icon: 'error',
+      title: 'Erro',
+      text: 'Preencha todos os campos corretamente',
+    });
   }
 });
 
@@ -78,7 +82,10 @@ function createUser() {
   ).then((response) => {
     response.json().then((info) => {
       if (response.ok == true) {
-        alert('Parabens! Usuário criado com sucesso.');
+        Swal.fire({
+          icon: 'success',
+          title: 'Parabens! Usuário criado com sucesso.',
+        });
         // Simulate a mouse click:
         window.location.href = './../index.html';
       } else {

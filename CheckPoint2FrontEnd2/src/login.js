@@ -9,7 +9,15 @@ let formData = {
 
 loginButtonElement.addEventListener('click', (event) => {
   event.preventDefault();
-  makeLogin();
+  if (Object.values(formData).every(Boolean)) {
+    makeLogin();
+  } else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Erro',
+      text: 'Senha ou E-mail inválidos',
+    });
+  }
 });
 // 12345678
 let checkInputValidity = (input) => {
@@ -78,7 +86,11 @@ function makeLogin() {
         window.location.href = './pages/tarefas.html';
       });
     } else {
-      alert('deu ruim');
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: 'Senha ou E-mail inválidos',
+      });
     }
   });
 }

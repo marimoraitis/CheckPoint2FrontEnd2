@@ -9,6 +9,7 @@
 
   <!-- ---------------- estilos compartilhados entre login e signup ---------------- -->
   <link rel="stylesheet" href="styles/acesso.css">
+  <link rel="stylesheet" href="dist/sweetalert2.min.css">
 
 </head>
 
@@ -27,12 +28,12 @@
         Email:
       </label>
       <input id="email" type="email" required>
-      <small>email invalido</small>
+      <small>E-mail inválido</small>
       <label>
         Senha:
       </label>
       <input id="password" type="password" minlength="8" required>
-      <small>senha invalido</small>
+      <small>Senha inválida</small>
 
 
       <button type="submit" id="loginButtonElement">Acessar</button>
@@ -43,6 +44,7 @@
     </div>
   </div>
   <script src="./src/login.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

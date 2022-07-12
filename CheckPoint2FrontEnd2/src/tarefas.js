@@ -6,7 +6,7 @@ const listTasks = document.querySelector('.tarefas-pendentes');
 const completedListTasks = document.querySelector('.tarefas-terminadas');
 const completeTaskButtonElement = document.querySelector('.not-done');
 const closeAppButtonElement = document.querySelector('#closeApp');
-const userName = document.querySelector('#userName');
+const userName = document.querySelector(' #userName');
 const headersAuthRequest = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
@@ -19,7 +19,10 @@ function getUserInfo() {
   }).then((response) => {
     if (response.ok) {
       response.json().then((user) => {
-        userName.innerHTML = `${user.firstName} ${user.lastName}`;
+        userName.innerHTML = '';
+        userName.innerHTML += `
+        <p>${user.firstName} ${user.lastName}</p>
+      `;
 
         // !Insira a lógica aqui para mostrar o Nome Completo do usuário no HTML da Aplicação
       });
@@ -90,7 +93,7 @@ function getTasks() {
           <li class="tarefa">
             <div class="descricao">
               <p class="nome">${task.description}</p>
-              <p class="timestamp">Criada em: ${task.createdAt}</p>
+              <p class="timestamp">Criada em: ${dateFormat}</p>
               <button class="update" onclick="updateTask(${task.id},${task.completed})" >
                 <img src="./../assets/arrow-rotate-left-solid.svg" alt="">
               </button>
