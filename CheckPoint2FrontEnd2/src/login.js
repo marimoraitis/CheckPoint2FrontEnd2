@@ -67,7 +67,7 @@ function makeLogin() {
   // O Fetch é responsável por fazer uma requisição para um back-end
   // O parametro do fetch serve justamente para especificarmos aonde ele irá fazer a requisição
   fetch(
-    'https://ctd-todo-api.herokuapp.com/v1/users/login',
+    'https://ctd-fe2-todo-v2.herokuapp.com/v1/users/login',
     requestPostConfiguration,
   ).then((response) => {
     if (response.ok) {

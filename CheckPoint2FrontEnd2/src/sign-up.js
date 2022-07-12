@@ -73,7 +73,7 @@ function createUser() {
   // O Fetch é responsável por fazer uma requisição para um back-end
   // O parametro do fetch serve justamente para especificarmos aonde ele irá fazer a requisição
   fetch(
-    'https://ctd-todo-api.herokuapp.com/v1/users',
+    'https://ctd-fe2-todo-v2.herokuapp.com/v1/users',
     requestPostConfiguration,
   ).then((response) => {
     response.json().then((info) => {
@@ -88,5 +88,5 @@ function createUser() {
       }
     });
   });
-  window.location.href = './../index.html';
+  // window.location.href = './../index.html';
 }

@@ -1,5 +1,5 @@
 let token = localStorage.getItem('token');
-const apiUrl = 'https://ctd-todo-api.herokuapp.com/v1';
+const apiUrl = 'https://ctd-fe2-todo-v2.herokuapp.com/v1';
 const createTaskButtonElement = document.querySelector('#createTaskButton');
 const skeletonElement = document.querySelector('#skeleton');
 const listTasks = document.querySelector('.tarefas-pendentes');
@@ -12,7 +12,7 @@ const headersAuthRequest = {
 };
 
 function getUserInfo() {
-  fetch('https://ctd-todo-api.herokuapp.com/v1/users/getMe', {
+  fetch('https://ctd-fe2-todo-v2.herokuapp.com/v1/users/getMe', {
     headers: headersAuthRequest,
   }).then((response) => {
     if (response.ok) {
@@ -44,6 +44,18 @@ function updateTask(id, isCompleted) {
   });
 }
 
+function deleteTask(id) {
+  let requestConfiguration = {
+    method: 'DELETE',
+    headers: headersAuthRequest,
+  };
+  fetch(`${apiUrl}/tasks/${id}`, requestConfiguration).then((response) => {
+    if (response.ok) {
+      getTasks();
+    }
+  });
+}
+
 // Função que Obtem as Tarefas
 function getTasks() {
   fetch(`${apiUrl}/tasks`, { headers: headersAuthRequest }).then((response) => {
@@ -52,6 +64,7 @@ function getTasks() {
       listTasks.innerHTML = '';
       completedListTasks.innerHTML = '';
 
+      console.log(tasks);
       for (let task of tasks) {
         console.log(task);
         if (!task.completed) {
@@ -70,11 +83,16 @@ function getTasks() {
           completedListTasks.innerHTML += `
           
           <li class="tarefa">
-          <div class="not-done" onclick="updateTask(${task.id},${task.completed})" ></div>
-              <div class="descricao">
+            <div class="descricao">
               <p class="nome">${task.description}</p>
               <p class="timestamp">Criada em: ${task.createdAt}</p>
-              </div>
+              <button class="update" onclick="updateTask(${task.id},${task.completed})" >
+                <img src="./../assets/arrow-rotate-left-solid.svg" alt="">
+              </button>
+              <button class="delete" onclick="deleteTask(${task.id})" >
+              <img src="./../assets/trash-can-solid.svg" alt="">
+              </button>
+            </div>
           </li>
           
           `;
@@ -110,6 +128,11 @@ function createTask() {
 completeTaskButtonElement.addEventListener('click', (event) => {
   event.preventDefault();
   completeTask();
+});
+
+createTaskButtonElement.addEventListener('click', (event) => {
+  event.preventDefault();
+  createTask();
 });
 
 // Verificação se o Token Existe
