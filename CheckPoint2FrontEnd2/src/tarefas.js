@@ -33,12 +33,15 @@ function getUserInfo() {
   });
 }
 
-function updateTask(id, isCompleted) {
+function updateTask(id, isCompleted, descriptionContent) {
   // Objeto que servira como Configuração da Requisição de POST
   let requestConfiguration = {
     method: 'PUT',
     headers: headersAuthRequest,
-    body: JSON.stringify({ completed: !isCompleted }),
+    body: JSON.stringify({
+      description: descriptionContent,
+      completed: !isCompleted,
+    }),
   };
 
   fetch(`${apiUrl}/tasks/${id}`, requestConfiguration).then((response) => {
@@ -60,6 +63,30 @@ function deleteTask(id) {
   });
 }
 
+function saveTask(id, isCompleted, description) {
+  let descriptionValue = document.querySelector(
+    `[data-id="${id}"] input`,
+  ).value;
+  if (descriptionValue == '') {
+    updateTask(id, !isCompleted, description);
+  } else {
+    updateTask(id, !isCompleted, descriptionValue);
+  }
+}
+
+function editTask(id, description, date, isCompleted) {
+  let descriptionElement = document.querySelector(`[data-id="${id}"]`);
+  descriptionElement.innerHTML = `
+  <input type="text" placeholder="${description}">
+  <div class="actions">
+    <p class="timestamp">Criada em: ${date}</p>
+    <button class="edit" onclick="saveTask(${id},${isCompleted}),'${description}'" >
+      <img src="./../assets/circle-check-solid.svg" alt="">
+    </button>
+  </div>
+  `;
+}
+
 // Função que Obtem as Tarefas
 function getTasks() {
   fetch(`${apiUrl}/tasks`, { headers: headersAuthRequest }).then((response) => {
@@ -79,10 +106,15 @@ function getTasks() {
           listTasks.innerHTML += `
         
         <li class="tarefa">
-        <div class="not-done" onclick="updateTask(${task.id},${task.completed})" ></div>
-            <div class="descricao">
-            <p class="nome">${task.description}</p>
-            <p class="timestamp">Criada em: ${dateFormat}</p>
+        <div class="not-done" onclick="updateTask(${task.id},${task.completed},'${task.description}')" ></div>
+            <div class="descricao" data-id="${task.id}">
+              <p class="nome">${task.description}</p>   
+              <div class="actions">
+                <p class="timestamp">Criada em: ${dateFormat}</p>
+                <button class="edit" onclick="editTask(${task.id},'${task.description}','${dateFormat}',${task.completed})" >
+                  <img src="./../assets/pen-to-square-solid.svg" alt="">
+                </button>
+              </div>
             </div>
         </li>
         
@@ -93,13 +125,15 @@ function getTasks() {
           <li class="tarefa">
             <div class="descricao">
               <p class="nome">${task.description}</p>
-              <p class="timestamp">Criada em: ${dateFormat}</p>
-              <button class="update" onclick="updateTask(${task.id},${task.completed})" >
-                <img src="./../assets/arrow-rotate-left-solid.svg" alt="">
-              </button>
-              <button class="delete" onclick="deleteTask(${task.id})" >
-              <img src="./../assets/trash-can-solid.svg" alt="">
-              </button>
+              <div class="actions">
+                <p class="timestamp">Criada em: ${dateFormat}</p>
+                <button class="update" onclick="updateTask(${task.id},${task.completed})" >
+                  <img src="./../assets/arrow-rotate-left-solid.svg" alt="">
+                </button>
+                <button class="delete" onclick="deleteTask(${task.id})" >
+                <img src="./../assets/trash-can-solid.svg" alt="">
+                </button>
+              </div>
             </div>
           </li>
           
